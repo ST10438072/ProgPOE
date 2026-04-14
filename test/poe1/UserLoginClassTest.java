@@ -43,7 +43,7 @@ public class UserLoginClassTest {
     public void testCheckUserName() {
         boolean expected = true;
         boolean actual = UserLoginClass.checkUserName("kyl_1");
-        assertEquals("Username test failed", expected, actual);
+        assertEquals("Username test passed", expected, actual);
     }
 
     /**
@@ -53,7 +53,7 @@ public class UserLoginClassTest {
     public void testCheckPasswordComplexityValid() {
         boolean expected = true;
         boolean actual = UserLoginClass.checkPasswordComplexity("Ch&&sec@ke99");
-        assertEquals("Valid password test failed", expected, actual);
+        assertEquals("Valid password test succeded", expected, actual);
     }
 
     /**
@@ -73,7 +73,7 @@ public class UserLoginClassTest {
     public void testCheckCellPhoneNumber() {
         boolean expected = true;
         boolean actual = UserLoginClass.checkCellPhoneNumber("+27831234567");
-        assertEquals("Phone number test failed", expected, actual);
+        assertEquals("Phone number test succeded", expected, actual);
     }
 
     /**
@@ -113,7 +113,7 @@ public class UserLoginClassTest {
         boolean expected = true;
         boolean actual = UserLoginClass.loginUser("kyl_1", "Ch&&sec@ke99");
 
-        assertEquals("Login test failed", expected, actual);
+        assertEquals("Login test succeded", expected, actual);
     }
 
     /**
