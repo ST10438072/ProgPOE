@@ -24,6 +24,7 @@ public class POE1 {
         Scanner input = new Scanner(System.in);
         Message msg = new Message();
 
+        System.out.println("\n--- Registration ---");
         // Get user details
         System.out.print("Enter first name: ");
         String firstName = input.nextLine();
@@ -45,9 +46,6 @@ public class POE1 {
         System.out.println("Captured Phone Number: " + phone);
 
         Random random = new Random();
-
-        String correctUsername = "admin";
-        String correctPassword = "1234";
 
         System.out.println("\n--- Login ---");
 
@@ -92,12 +90,12 @@ public class POE1 {
         } else {
 
             System.out.println(
-                    "\nRegistration failed due to invalid input.");
+                    "Registration failed due to invalid input.");
         }
 
         // CHECK LOGIN
-        if (username.equals(correctUsername)
-                && password.equals(correctPassword)) {
+        if (loginUsername.equals(username)
+                && loginPassword.equals(password)) {
 
             System.out.println("\nWelcome " + username + "!");
             System.out.println("Login successful.\n");
@@ -127,202 +125,232 @@ public class POE1 {
                 // OPTION 1: SEND MESSAGE
                 if (menuOption == 1) {
                     
-                     // Check if limit reached
-                    if (sentMessages >= maxMessages) {
+                      // Check message limit
+                if (sentMessages >= maxMessages) {
 
-                        System.out.println("\nYou have reached your message limit.");
-                        System.out.println("No more messages can be sent.\n");
+                    System.out.println(
+                            "\nYou have reached your message limit.");
 
-                    }
-                    // Generate unique message ID
-                    int messageID = 100000 + random.nextInt(900000);
+                    System.out.println(
+                            "No more messages can be sent.");
 
-                    // Recipient Name
-                    System.out.print("Enter recipient name: ");
-                    String recipient = input.nextLine();
+                    continue;
+                }
 
-                    // Recipient Phone Number
-                    System.out.print(
-                            "Enter recipient phone number (+27): ");
-                    String recipientPhone = input.nextLine();
+                // Generate message ID
+                int messageID =
+                        100000 + random.nextInt(900000);
 
-                    // Validate recipient phone number
-                    if (!UserLoginClass.checkCellPhoneNumber(
-                            recipientPhone)) {
+                // Recipient
+                System.out.print(
+                        "Enter recipient name: ");
 
-                        System.out.println(
-                                "Invalid recipient phone number.\n");
+                String recipient =
+                        input.nextLine();
 
-                    } else {
+                // Recipient phone
+                System.out.print(
+                        "Enter recipient phone number (+27): ");
 
-                        // Message
-                        System.out.print(
-                                "Enter your message "
+                String recipientPhone =
+                        input.nextLine();
+
+                // Validate recipient phone
+                if (!UserLoginClass.checkCellPhoneNumber(
+                        recipientPhone)) {
+
+                    System.out.println(
+                            "Invalid recipient phone number.");
+
+                    continue;
+                }
+
+                // Message
+                System.out.print(
+                        "Enter your message "
                                 + "(max 250 characters): ");
-                        String message = input.nextLine();
 
-                        // Validate message length
-                        if (message.length() > 250) {
+                String message =
+                        input.nextLine();
 
-                            System.out.println(
-                                    "Message exceeds "
-                                    + "250 characters.\n");
-
-                        } else {
-
-                            // Display details
-                            System.out.println(
-                                    "\n===== MESSAGE DETAILS =====");
-                            System.out.println(
-                                    "Message ID: " + messageID);
-                            System.out.println(
-                                    "Recipient: " + recipient);
-                            System.out.println(
-                                    "Recipient Phone: "
-                                    + recipientPhone);
-                            System.out.println(
-                                    "Message: " + message);
-
-                            // Send or store menu
-                            System.out.println("\nChoose an option:");
-                            System.out.println(
-                                    "1. Send Message Now");
-                            System.out.println(
-                                    "2. Store Message To Send Later");
-
-                            int messageOption = input.nextInt();
-                            input.nextLine(); // clear buffer
-
-                            // SEND MESSAGE
-                            if (messageOption == 1) {
-
-                                System.out.println(
-                                        "\nMessage successfully sent.\n");
-
-                            }
-
-                            // STORE MESSAGE
-                            else if (messageOption == 2) {
-
-                                try {
-
-                                    FileWriter writer =
-                                            new FileWriter(
-                                                    "messages.json",
-                                                    true);
-
-                                    writer.write("{");
-                                    writer.write(
-                                            "\"MessageID\":\""
-                                            + messageID + "\",");
-                                    writer.write(
-                                            "\"Recipient\":\""
-                                            + recipient + "\",");
-                                    writer.write(
-                                            "\"RecipientPhone\":\""
-                                            + recipientPhone + "\",");
-                                    writer.write(
-                                            "\"Message\":\""
-                                            + message + "\"");
-                                    writer.write("}\n");
-
-                                    writer.close();
-
-                                    System.out.println(
-                                            "\nMessage successfully stored.");
-                                    System.out.println(
-                                            "Saved to messages.json\n");
-
-                                } catch (IOException e) {
-
-                                    System.out.println(
-                                            "Error saving message.");
-                                }
-
-                            }
-
-                            // INVALID OPTION
-                            else {
-
-                                System.out.println(
-                                        "\nInvalid option.\n");
-                            }
-                        }
-                    }
-
-                }
-
-                // OPTION 2
-                else if (menuOption == 2) {
+                // Validate message length
+                if (message.length() > 250) {
 
                     System.out.println(
-                            "\nFeature not available yet.");
-                    System.out.println(
-                            "Coming soon:)\n");
+                            "Message exceeds 250 characters.");
 
+                    continue;
                 }
 
-                // OPTION 3: SHOW JSON FILE
-                else if (menuOption == 3) {
+                // Display details
+                System.out.println(
+                        "\n===== MESSAGE DETAILS =====");
+
+                System.out.println(
+                        "Message ID: " + messageID);
+
+                System.out.println(
+                        "Recipient: " + recipient);
+
+                System.out.println(
+                        "Recipient Phone: "
+                                + recipientPhone);
+
+                System.out.println(
+                        "Message: " + message);
+
+                // Send/store option
+                System.out.println("\nChoose an option:");
+                System.out.println("1. Send Message Now");
+                System.out.println("2. Store Message To Send Later");
+
+                int messageOption =
+                        input.nextInt();
+
+                input.nextLine();
+
+                // =========================
+                // SEND MESSAGE
+                // =========================
+                if (messageOption == 1) {
+
+                    System.out.println(
+                            "\nMessage successfully sent.");
+
+                    sentMessages++;
+                }
+
+                // =========================
+                // STORE MESSAGE
+                // =========================
+                else if (messageOption == 2) {
 
                     try {
 
-                        File file = new File("messages.json");
+                        FileWriter writer =
+                                new FileWriter(
+                                        "messages.json",
+                                        true);
 
-                        if (file.exists()) {
+                        writer.write("{\n");
+                        writer.write(
+                                "\"MessageID\":\""
+                                        + messageID + "\",\n");
 
-                            Scanner fileReader =
-                                    new Scanner(file);
+                        writer.write(
+                                "\"Recipient\":\""
+                                        + recipient + "\",\n");
 
-                            System.out.println(
-                                    "\n===== JSON FILE CONTENT =====");
+                        writer.write(
+                                "\"RecipientPhone\":\""
+                                        + recipientPhone + "\",\n");
 
-                            while (fileReader.hasNextLine()) {
+                        writer.write(
+                                "\"Message\":\""
+                                        + message + "\"\n");
 
-                                System.out.println(
-                                        fileReader.nextLine());
-                            }
+                        writer.write("}\n");
 
-                            fileReader.close();
-                            System.out.println();
+                        writer.close();
 
-                        } else {
+                        System.out.println(
+                                "\nMessage successfully stored.");
 
-                            System.out.println(
-                                    "\nmessages.json file not found.\n");
-                        }
+                        System.out.println(
+                                "Saved to messages.json");
+
+                        sentMessages++;
 
                     } catch (IOException e) {
 
                         System.out.println(
-                                "Error opening JSON file.");
+                                "Error saving message.");
                     }
                 }
 
-                // OPTION 4: EXIT
-                else if (menuOption == 4) {
-
-                    System.out.println(
-                            "\nExiting program...");
-                    System.out.println("Goodbye!");
-                }
-
-                // INVALID OPTION
+                // Invalid message option
                 else {
 
                     System.out.println(
-                            "\nInvalid option. Try again.\n");
+                            "Invalid option.");
                 }
+            }
 
-            } while (menuOption != 4);
+            // =========================
+            // OPTION 2
+            // =========================
+            else if (menuOption == 2) {
 
-        } else {
+                System.out.println(
+                        "\nFeature not available yet.");
 
-            System.out.println(
-                    "\nIncorrect username or password.");
-            System.out.println("Access denied.");
-        }
+                System.out.println(
+                        "Coming soon :)");
+            }
+
+            // =========================
+            // OPTION 3: SHOW JSON FILE
+            // =========================
+            else if (menuOption == 3) {
+
+                try {
+
+                    File file =
+                            new File("messages.json");
+
+                    if (file.exists()) {
+
+                        Scanner fileReader =
+                                new Scanner(file);
+
+                        System.out.println(
+                                "\n===== JSON FILE CONTENT =====");
+
+                        while (fileReader.hasNextLine()) {
+
+                            System.out.println(
+                                    fileReader.nextLine());
+                        }
+
+                        fileReader.close();
+
+                    } else {
+
+                        System.out.println(
+                                "\nmessages.json file not found.");
+                    }
+
+                } catch (IOException e) {
+
+                    System.out.println(
+                            "Error opening JSON file.");
+                }
+            }
+
+            // =========================
+            // OPTION 4: EXIT
+            // =========================
+            else if (menuOption == 4) {
+
+                System.out.println(
+                        "\nExiting program...");
+
+                System.out.println(
+                        "Goodbye!");
+            }
+
+            // =========================
+            // INVALID MENU OPTION
+            // =========================
+            else {
+
+                System.out.println(
+                        "\nInvalid option. Try again.");
+            }
+
+        } while (menuOption != 4);
 
         input.close();
+    }
     }
 }
