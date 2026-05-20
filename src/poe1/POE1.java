@@ -86,12 +86,7 @@ public class POE1 {
                 System.out.println(
                         "Login skipped due to registration failure.");
             }
-
-        } else {
-
-            System.out.println(
-                    "Registration failed due to invalid input.");
-        }
+        } 
 
         // CHECK LOGIN
         if (loginUsername.equals(username)
