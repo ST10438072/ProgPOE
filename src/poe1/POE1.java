@@ -68,7 +68,7 @@ public class POE1 {
                     firstName, lastName, username, password, phone);
 
             // Show registration result
-            System.out.println("\n--- Registration ---");
+            System.out.println("--- Registration ---");
             System.out.println(message);
 
             // Proceed to login ONLY if registration succeeded
